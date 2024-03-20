@@ -48,6 +48,7 @@ function App() {
               <Route path='/gifts' element={<Gifts />} />
               <Route path='/addGift' element={<AddGift />} />
               <Route path='/orders' element={<Orders />} />
+              <Route path='/checkout' element={<Orders />} />
               <Route path='/accountSetting' element={<AccountSettings />} />
             </Route>
             <Route element={<ProfileLayOut />}>

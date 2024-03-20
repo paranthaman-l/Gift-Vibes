@@ -1,16 +1,20 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo.svg'
 import Button from '../../components/shared/Button';
 import product1 from '../../assets/products/product2.webp'
 import product3 from '../../assets/products/product3.webp'
 import product4 from '../../assets/products/product4.webp'
 import { doSignInWithGoogle } from '../../apis/auth';
-
+import AuthService from '../../services/AuthService'
 const Login = () => {
     const navigate = useNavigate();
+    useEffect(() => {
+
+    }, [])
+
     const [login, setLogin] = useState({
-        username: "",
+        email: "",
         password: "",
     });
     const [loginError, setLoginError] = useState({});
@@ -19,36 +23,49 @@ const Login = () => {
         setLogin({ ...login, [name]: value });
         setLoginError({ ...loginError, [name]: false });
     };
-    const Login = (e) => {
+    const Login = async (e) => {
         e.preventDefault();
-        if (login.username == "admin@gmail.com" && login.password == "admin") {
-            navigate("/admin");
-        }
-        else if (login.username == "user@gmail.com" && login.password == "user") {
-            navigate("/");
-        }
-        else {
-            alert("Invalid Password");
-        }
+        await AuthService.Login(login).then((res) => {
+            console.log(res);
+            if (res.data.role == "USER") {
+                navigate("/");
+            } else if (res.data.role == "ADMIN") {
+                navigate("/admin")
+            } else {
+                alert("Invalid Credentials")
+            }
+        }).catch((err) => {
+            alert("Invalid Credentials")
+            console.log(err);
+        })
     }
     const handleLogin = async (e) => {
-        // await signInWithPopup(auth, provider).then((response) => {
-        //     console.log(response);
-        // });
         e.preventDefault();
-        doSignInWithGoogle().then((response)=>{
-            navigate("/");
-            alert("Welcome "+response.displayName);
+        await doSignInWithGoogle().then(async (response) => {
+            const { email, emailVerified } = response.user;
+            await AuthService.LoginWithGoogle(email, emailVerified).then((res) => {
+                console.log(res);
+                if (res.data.role == "USER") {
+                    navigate("/");
+                } else if (res.data.role == "ADMIN") {
+                    navigate("/admin")
+                } else {
+                    alert("Invalid Credentials")
+                }
+            }).catch((err) => {
+                console.log(err);
+            })
         }).catch((error) => {
             console.log(error);
         })
-        
     };
     return (
         <div className="min-h-screen flex justify-between px-40 relative items-center w-full font-grotesk">
             <div className="flex flex-col h-full mb-56">
                 <div className="absolute top-0 left-0 p-16">
-                    <img className='h-16 object-contain' src={logo} alt="" />
+                    <Link to={"/"}>
+                        <img className='h-16 object-contain cursor-pointer' src={logo} alt="" />
+                    </Link>
                 </div>
                 <div className="flex h-full flex-col">
                     <p className='text-5xl font-black  my-10'>Unlock Your Experience</p>
@@ -64,8 +81,8 @@ const Login = () => {
                 <p className='text-darkGreen font-bold text-3xl'>Login</p>
                 <div className="text-darkGreen">
                     <div className="flex flex-col my-6">
-                        <label className='my-1' htmlFor="username">Username or email address <span className='text-red'>*</span></label>
-                        <input id='username' name='username' onChange={handleChange} type="text" className='outline-none border border-darkGreen p-3 py-4 text-sm border-opacity-30 focus:border-opacity-100 duration-200 rounded-sm' placeholder='Enter your Username or email address...' />
+                        <label className='my-1' htmlFor="email">Username or email address <span className='text-red'>*</span></label>
+                        <input id='email' name='email' onChange={handleChange} type="text" className='outline-none border border-darkGreen p-3 py-4 text-sm border-opacity-30 focus:border-opacity-100 duration-200 rounded-sm' placeholder='Enter your Username or email address...' />
                     </div>
                     <div className="flex flex-col my-6">
                         <label className='my-1' htmlFor="password">Password <span className='text-red'>*</span></label>

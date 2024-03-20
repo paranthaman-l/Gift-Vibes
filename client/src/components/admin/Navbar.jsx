@@ -10,7 +10,7 @@ const Navbar = () => {
                 <NavLink to={"/admin"}><img className='h-10 object-contain mx-5 ' src={logo} alt="" /></NavLink>
             </div>
             <div className="">
-                <img className='h-10 w-10 rounded-full border cursor-pointer' onClick={() => navigate("/dashboard")} src={profile} alt="" />
+                <img className='h-10 w-10 rounded-full border cursor-pointer' onClick={() => navigate("/admin")} src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1361&q=80" alt="" />
             </div>
         </div>
     )

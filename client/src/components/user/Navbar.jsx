@@ -18,7 +18,7 @@ const Navbar = () => {
     },
     {
       title: "Personalized Gift",
-      path: "/personalizedGift",
+      path: "/customized",
     },
     {
       title: "Sales off",
@@ -53,7 +53,7 @@ const Navbar = () => {
             <HiOutlineShoppingBag className='hover:text-red text-2xl duration-200 cursor-pointer'  />
           </div>
           <div className="">
-            <img className='h-10 w-10 rounded-full border cursor-pointer' onClick={()=>navigate("/dashboard")} src={profile} alt="" />
+            <img className='h-10 w-10 rounded-full border cursor-pointer' onClick={()=>navigate("/dashboard")} src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1361&q=80" alt="" />
             {/* <BsPerson className='hover:text-red duration-200 cursor-pointer'  /> */}
           </div>
         </div>

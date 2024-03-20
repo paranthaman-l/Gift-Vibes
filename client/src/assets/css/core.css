@@ -55,6 +55,17 @@
   }
 }
 
+.move{
+  animation: move 30s infinite;
+}
+@keyframes move {
+  0%{
+    transform: translateX(0px);
+  }
+  100%{
+    transform: translateX(-1400px);
+  }
+}
 
 
 *::-webkit-scrollbar-track {
