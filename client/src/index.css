@@ -2,3 +2,189 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html {
+    font-family: "Inter", sans-serif;
+  }
+  
+  @supports (font-variation-settings: normal) {
+    html {
+      font-family: "Inter var", sans-serif;
+    }
+  }
+  
+ /* .app */
+.app {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  /* .home */
+  .home {
+    width: fit-content;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    padding: 24px;
+    gap: 1.75rem;
+    position: absolute;
+    z-index: 10;
+  }
+  
+  /* .home-content */
+  .home-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: 2.5rem;
+  }
+  
+  /* .head-text */
+  .head-text {
+    font-size: 6rem;
+    line-height: 7rem;
+    font-weight: 900;
+    color: black;
+  }
+  
+  /* .download-btn */
+  .download-btn {
+    width: 3.5rem;
+    height: 3.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    cursor: pointer;
+    outline: none;
+  }
+  
+  /* .editortabs-container */
+  .editortabs-container {
+    width: 4rem;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 0.25rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    gap: 1rem;
+  }
+  
+  /* .filtertabs-container */
+  .filtertabs-container {
+    position: absolute;
+    z-index: 10;
+    bottom: 1.25rem;
+    right: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  /* .aipicker-container */
+  .aipicker-container {
+    position: absolute;
+    left: calc(100% + 0.75rem);
+    margin-left: 0.75rem;
+    padding: 0.75rem;
+    width: 195px;
+    height: 220px;
+    border-radius: 0.375rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  /* .aipicker-textarea */
+  .aipicker-textarea {
+    width: 100%;
+    background: transparent;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    padding: 0.5rem;
+    outline: none;
+    flex: 1;
+  }
+  
+  /* .filepicker-container */
+  .filepicker-container {
+    position: absolute;
+    left: calc(100% + 0.75rem);
+    margin-left: 0.75rem;
+    padding: 0.75rem;
+    width: 195px;
+    height: 220px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.375rem;
+  }
+  
+  /* .filepicker-label */
+  .filepicker-label {
+    border: 1px solid #ccc;
+    padding-top: 0.375rem;
+    padding-bottom: 0.375rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border-radius: 0.375rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    font-size: 0.875rem;
+    color: #4a5568;
+    outline: none;
+    cursor: pointer;
+    width: fit-content;
+  }
+  
+  /* .tab-btn */
+  .tab-btn {
+    width: 3.5rem;
+    height: 3.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+  }
+  
+  .glassmorphism {
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 2px 30px 0 rgba(31, 38, 135, 0.07);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+  
+  input[type="file"] {
+    z-index: -1;
+    position: absolute;
+    opacity: 0;
+  }
+  
+  .sketch-picker {
+    width: 170px !important;
+    background: rgba(255, 255, 255, 0.25) !important;
+    box-shadow: 0 2px 30px 0 rgba(31, 38, 135, 0.07) !important;
+    backdrop-filter: blur(4px) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    border-radius: 6px !important;
+  }
+  
+  .sketch-picker > div:nth-child(3) {
+    display: none !important;
+  }
+  

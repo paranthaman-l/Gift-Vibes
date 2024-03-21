@@ -22,7 +22,7 @@ public class Customer {
 	private String cid;
 	
 	private String profile;
-
+	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "uid", referencedColumnName = "uid")
 	private User user;

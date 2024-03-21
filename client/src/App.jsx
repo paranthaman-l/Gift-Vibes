@@ -27,6 +27,8 @@ const AccountSettings = lazy(() => import('./pages/admin/AccountSettings'))
 const Compare = lazy(() => import('./pages/user/Compare'))
 const AddGift = lazy(() => import('./components/admin/gifts/AddGift'))
 const WishList = lazy(() => import('./pages/user/WishList'))
+const Product = lazy(() => import('./pages/user/Product'))
+const CustomizedTShirt = lazy(() => import('./pages/CustomizedTShirt'))
 function App() {
   return (
     <>
@@ -40,6 +42,8 @@ function App() {
             </Route>
             <Route element={<UserLayout />}>
               <Route path='/' element={<UserHome />} />
+              <Route path='/product' element={<Product />} />
+              <Route path='/customizedTShirt' element={<CustomizedTShirt />} />
             </Route>
             <Route element={<AdminLayout />}>
               <Route path='/admin' element={<AdminDashBoard />} />

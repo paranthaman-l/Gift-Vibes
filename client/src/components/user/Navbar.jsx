@@ -30,7 +30,7 @@ const Navbar = () => {
     },
   ]
   return (
-    <div className='z-10 px-10 fixed top-0 left-0 shadow-md w-full bg-white flex justify-between items-center font-grotesk'>
+    <div className='z-30 px-10 fixed top-0 left-0 shadow-md w-full bg-white flex justify-between items-center font-grotesk'>
       <div className="flex w-5/12">
         {navData.map((link, i) => {
           return (
