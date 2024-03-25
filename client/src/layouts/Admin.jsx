@@ -1,8 +1,15 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router-dom';
 import Navbar from '../components/admin/Navbar';
-import SideBar from '../components/admin/SideBar'
-const User = () => {
+import SideBar from '../components/admin/SideBar';
+import { useStates } from '../States';
+import { useEffect } from 'react';
+
+const Admin = () => {
+    const { GetUserDetails } = useStates();
+    useEffect(() => {
+        GetUserDetails();
+    }, [])
+
     return (
         <>
             <div className='m-0 p-0 flex flex-row min-h-screen w-full font-grotesk'>
@@ -18,4 +25,4 @@ const User = () => {
     )
 }
 
-export default User;
+export default Admin;

@@ -168,11 +168,11 @@ html {
     border: 1px solid rgba(255, 255, 255, 0.18);
   }
   
-  input[type="file"] {
+  /* input[type="file"] {
     z-index: -1;
     position: absolute;
     opacity: 0;
-  }
+  } */
   
   .sketch-picker {
     width: 170px !important;

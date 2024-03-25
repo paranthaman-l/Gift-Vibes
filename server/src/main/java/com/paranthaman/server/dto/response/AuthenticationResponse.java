@@ -16,4 +16,5 @@ public class AuthenticationResponse {
     private String uid;
     private Role role;
     private String error;
+    
 }

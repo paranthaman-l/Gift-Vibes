@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.paranthaman.server.constant.Api;
+import com.paranthaman.server.models.Admin;
+import com.paranthaman.server.models.Customer;
 import com.paranthaman.server.models.Gift;
 import com.paranthaman.server.models.Order;
 import com.paranthaman.server.models.Payment;
@@ -29,8 +31,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RequiredArgsConstructor
 @CrossOrigin(value = Api.FRONTEND)
 public class AdminController {
+    
     private final AdminService adminService;
 
+    @GetMapping("/getById")
+    public Admin getUserById(@RequestParam String uid) {
+        return adminService.getUserById(uid);
+    }
+    @GetMapping("/getCustomer")
+    public List<Customer> getCustomer() {
+        return adminService.getAllCustomer();
+    }
+    
     //Theme
     
     @PostMapping("/theme")
@@ -50,6 +62,16 @@ public class AdminController {
 
     //Gift
     
+    @GetMapping("/gift")
+    public List<Gift> getAllGifts() {
+        return adminService.getAllGifts();
+    }
+    
+    @GetMapping("/getGiftById")
+    public Gift getGifts(@RequestParam String gid) {
+        return adminService.getGifts(gid);
+    }
+
     @PostMapping("/gift")
     public String addGift(@RequestBody Gift gift) {
         return adminService.addGift(gift);

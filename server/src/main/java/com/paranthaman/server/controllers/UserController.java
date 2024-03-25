@@ -1,14 +1,23 @@
 package com.paranthaman.server.controllers;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.paranthaman.server.constant.Api;
+import com.paranthaman.server.models.Admin;
+import com.paranthaman.server.models.Customer;
+import com.paranthaman.server.models.Gift;
 import com.paranthaman.server.models.Order;
 import com.paranthaman.server.models.Payment;
+import com.paranthaman.server.models.User;
+import com.paranthaman.server.models.enumerate.Role;
 import com.paranthaman.server.services.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -25,11 +34,29 @@ public class UserController {
     
     private final UserService userService;
 
+
+    @GetMapping("/getById")
+    public Customer getUserById(@RequestParam String uid) {
+        return userService.getUserById(uid);
+    }
+
+    @GetMapping("/getFeaturedGift")
+    public List<Gift> geGifts(){
+        return userService.getFeaturedGift();
+    }
+
+    @GetMapping("/getProduct")
+    public Gift getProduct(@RequestParam String pid){
+        return userService.getProduct(pid);
+    }
+
+        
+
     // Orders
 
     @PostMapping("/order")
-    public String addOrder(@RequestBody Order order) {
-        return userService.addOrder(order);
+    public String addOrder(@RequestBody Order order,@RequestParam String uid,@RequestParam List<String> gids) {
+        return userService.addOrder(order,uid,gids);
     }
 
     @PutMapping("/order/{oid}")

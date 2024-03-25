@@ -93,4 +93,7 @@ public class AuthService {
 		var token = jwtUtil.generateToken(user);
 		return AuthenticationResponse.builder().token(token).uid(user.getUid()).role(user.getRole()).build();
 	}
+    public User getUserbyEmail(String email) {
+        return userRepository.findByEmail(email).get();
+    }
 }

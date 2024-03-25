@@ -1,4 +1,4 @@
-import { authApi } from '../apis/axios'
+import { authApi, mailApi } from '../apis/axios'
 class AuthService {
     Login(login) {
         return authApi.post("/login", login);
@@ -14,6 +14,13 @@ class AuthService {
 
     SignUpWithGoogle(username, profile, email, verified) {
         return authApi.post("/signUpWithGoogle", { username, profile, email, role: "user" });
+    }
+
+    SendOTP(signUp){
+        return mailApi.post("/signup/send-otp",signUp);
+    }
+    getFeaturedGift() {
+        return authApi.get("/getFeaturedGift")
     }
 }
 

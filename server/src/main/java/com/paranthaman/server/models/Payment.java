@@ -30,8 +30,11 @@ public class Payment {
     private String pid;
 
     private String status;
+
     private Double amountPaid;
+
     private Date paymentDate;
+    
     private String modeOfPayment;
 
     @CreatedDate

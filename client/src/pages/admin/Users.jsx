@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import {
@@ -14,62 +14,28 @@ import {
     IconButton,
     Tooltip,
 } from "@material-tailwind/react";
+import AdminService from '../../services/AdminService';
 
 const Users = () => {
+    const [users,setUsers] = useState();
+    const getUsers = async ()=>{
+        await AdminService.GetAllCustomers().then((response)=>{
+            setUsers(response.data);
+        }).catch((error)=>{
+            console.log(error);
+        })
+    }
+    useEffect(() => {
+        getUsers();
+    }, [])
+    
 
+    const TABLE_HEAD = ["User","No of Orders", "Joined", ""];
 
-    const TABLE_HEAD = ["User", "Function", "Status", "Employed", ""];
-
-    const TABLE_ROWS = [
-        {
-            img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
-            name: "John Michael",
-            email: "john@creative-tim.com",
-            job: "Manager",
-            org: "Organization",
-            online: true,
-            date: "23/04/18",
-        },
-        {
-            img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-2.jpg",
-            name: "Alexa Liras",
-            email: "alexa@creative-tim.com",
-            job: "Programator",
-            org: "Developer",
-            online: false,
-            date: "23/04/18",
-        },
-        {
-            img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-1.jpg",
-            name: "Laurent Perrier",
-            email: "laurent@creative-tim.com",
-            job: "Executive",
-            org: "Projects",
-            online: false,
-            date: "19/09/17",
-        },
-        {
-            img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-4.jpg",
-            name: "Michael Levi",
-            email: "michael@creative-tim.com",
-            job: "Programator",
-            org: "Developer",
-            online: true,
-            date: "24/12/08",
-        },
-        {
-            img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-5.jpg",
-            name: "Richard Gran",
-            email: "richard@creative-tim.com",
-            job: "Manager",
-            org: "Executive",
-            online: false,
-            date: "04/10/21",
-        },
-    ];
+  
 
     return (
-        <div className='px-10 w-3/4 h-[650px] overflow-y-scroll overflow-x-hidden'>
+        <div className='px-10 w-3/4 h-[650px] overflow-y-scroll overflow-x-hidden font-grotesk'>
             <p className='text-4xl font-semibold tracking-wider text-textGray'>Users</p>
 
             <Card className="h-full w-full">
@@ -121,37 +87,44 @@ const Users = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {TABLE_ROWS.map(
-                                ({ img, name, email, job, org, online, date }, index) => {
-                                    const isLast = index === TABLE_ROWS.length - 1;
+                            {users?.map(
+                                (user, index) => {
+                                    const isLast = index === users.length - 1;
                                     const classes = isLast
                                         ? "p-4"
                                         : "p-4 border-b border-blue-gray-50";
 
                                     return (
-                                        <tr key={name}>
+                                        <tr key={user?.cid}>
                                             <td className={classes}>
                                                 <div className="flex items-center gap-3">
-                                                    <Avatar src={img} alt={name} size="sm" />
+                                                    <Avatar src={user?.profile} alt={name} size="sm" />
                                                     <div className="flex flex-col">
                                                         <Typography
                                                             variant="small"
                                                             color="blue-gray"
                                                             className="font-normal"
                                                         >
-                                                            {name}
+                                                            {user?.user?.name}
                                                         </Typography>
                                                         <Typography
                                                             variant="small"
                                                             color="blue-gray"
                                                             className="font-normal opacity-70"
                                                         >
-                                                            {email}
+                                                            {user?.user?.email}
                                                         </Typography>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td className={classes}>
+                                                <div className="w-max">
+                                                    <Typography>
+                                                        {user?.orders.length}
+                                                    </Typography>
+                                                </div>
+                                            </td> 
+                                            {/* <td className={classes}>
                                                 <div className="flex flex-col">
                                                     <Typography
                                                         variant="small"
@@ -168,8 +141,8 @@ const Users = () => {
                                                         {org}
                                                     </Typography>
                                                 </div>
-                                            </td>
-                                            <td className={classes}>
+                                            </td> */}
+                                            {/* <td className={classes}>
                                                 <div className="w-max">
                                                     <Chip
                                                         variant="ghost"
@@ -178,14 +151,14 @@ const Users = () => {
                                                         color={online ? "green" : "blue-gray"}
                                                     />
                                                 </div>
-                                            </td>
+                                            </td> */}
                                             <td className={classes}>
                                                 <Typography
                                                     variant="small"
                                                     color="blue-gray"
                                                     className="font-normal"
                                                 >
-                                                    {date}
+                                                    {user?.user?.createdAt}
                                                 </Typography>
                                             </td>
                                             <td className={classes}>

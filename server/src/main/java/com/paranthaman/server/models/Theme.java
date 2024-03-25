@@ -36,7 +36,7 @@ public class Theme {
     private String image;
 
     private Double price;
-    
+
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false, updatable = false)

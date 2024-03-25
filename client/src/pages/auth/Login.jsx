@@ -7,16 +7,12 @@ import product3 from '../../assets/products/product3.webp'
 import product4 from '../../assets/products/product4.webp'
 import { doSignInWithGoogle } from '../../apis/auth';
 import AuthService from '../../services/AuthService'
+import { useStates } from '../../States';
+import AdminService from '../../services/AdminService';
+import UserService from '../../services/UserService';
 const Login = () => {
     const navigate = useNavigate();
-    useEffect(() => {
-
-    }, [])
-
-    const [login, setLogin] = useState({
-        email: "",
-        password: "",
-    });
+    const { login, setLogin, GetUserDetails, setUser } = useStates();
     const [loginError, setLoginError] = useState({});
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -25,12 +21,26 @@ const Login = () => {
     };
     const Login = async (e) => {
         e.preventDefault();
-        await AuthService.Login(login).then((res) => {
-            console.log(res);
-            if (res.data.role == "USER") {
-                navigate("/");
-            } else if (res.data.role == "ADMIN") {
-                navigate("/admin")
+        await AuthService.Login(login).then(async (res) => {
+            localStorage.setItem("token", res.data.token);
+            localStorage.setItem("role", res.data.role);
+            localStorage.setItem("uid", res.data.uid);
+            GetUserDetails();
+            if (res.data.role == 'ADMIN') {
+                await AdminService.GetUser().then((response) => {
+                    setUser(response.data);
+                    navigate("/admin")
+                }).catch((error) => {
+                    console.log(error);
+                })
+            }
+            else if (res.data.role == 'USER') {
+                await UserService.GetUser().then((response) => {
+                    setUser(response.data);
+                    navigate("/");
+                }).catch((error) => {
+                    console.log(error);
+                })
             } else {
                 alert("Invalid Credentials")
             }
@@ -43,15 +53,29 @@ const Login = () => {
         e.preventDefault();
         await doSignInWithGoogle().then(async (response) => {
             const { email, emailVerified } = response.user;
-            await AuthService.LoginWithGoogle(email, emailVerified).then((res) => {
-                console.log(res);
-                if (res.data.role == "USER") {
-                    navigate("/");
-                } else if (res.data.role == "ADMIN") {
+            await AuthService.LoginWithGoogle(email, emailVerified).then(async (res) => {
+                localStorage.setItem("token", res.data.token);
+                localStorage.setItem("role", res.data.role);
+                localStorage.setItem("uid", res.data.uid);
+                GetUserDetails();
+            if (res.data.role == 'ADMIN') {
+                await AdminService.GetUser().then((response) => {
+                    setUser(response.data);
                     navigate("/admin")
-                } else {
-                    alert("Invalid Credentials")
-                }
+                }).catch((error) => {
+                    console.log(error);
+                })
+            }
+            else if (res.data.role == 'USER') {
+                await UserService.GetUser().then((response) => {
+                    setUser(response.data);
+                    navigate("/");
+                }).catch((error) => {
+                    console.log(error);
+                })
+            } else {
+                alert("Invalid Credentials")
+            }
             }).catch((err) => {
                 console.log(err);
             })

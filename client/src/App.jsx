@@ -1,9 +1,12 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
 import './assets/css/core.css'
-import { Suspense, lazy } from 'react'
+import { Suspense, lazy, useEffect } from 'react'
 import Loader from './components/shared/Loader'
 import Customized from './pages/Customized'
+import { States, useStates } from './States'
+import ScrollToTop from './utils/ScrollToTop'
+import CheckOut from './pages/user/CheckOut'
 const CommonLayout = lazy(() => import('./layouts/Common'))
 const AdminLayout = lazy(() => import('./layouts/Admin'))
 const UserLayout = lazy(() => import('./layouts/User'))
@@ -26,14 +29,21 @@ const Orders = lazy(() => import('./pages/admin/Orders'))
 const AccountSettings = lazy(() => import('./pages/admin/AccountSettings'))
 const Compare = lazy(() => import('./pages/user/Compare'))
 const AddGift = lazy(() => import('./components/admin/gifts/AddGift'))
+const EditGift = lazy(() => import('./components/admin/gifts/EditGift'))
 const WishList = lazy(() => import('./pages/user/WishList'))
 const Product = lazy(() => import('./pages/user/Product'))
 const CustomizedTShirt = lazy(() => import('./pages/CustomizedTShirt'))
 function App() {
+  const { GetUserDetails } = useStates();
+  useEffect(() => {
+    GetUserDetails();
+  }, [])
+
   return (
     <>
       <BrowserRouter>
         <Suspense fallback={<Loader />}>
+          <ScrollToTop />
           <Routes>
             <Route path='/customized' element={<Customized />} />
             <Route element={<CommonLayout />}>
@@ -42,8 +52,9 @@ function App() {
             </Route>
             <Route element={<UserLayout />}>
               <Route path='/' element={<UserHome />} />
-              <Route path='/product' element={<Product />} />
               <Route path='/customizedTShirt' element={<CustomizedTShirt />} />
+              <Route path='/product/:pid' element={<Product />} />
+              <Route path='/checkOut' element={<CheckOut />} />
             </Route>
             <Route element={<AdminLayout />}>
               <Route path='/admin' element={<AdminDashBoard />} />
@@ -51,6 +62,7 @@ function App() {
               <Route path='/themes' element={<Themes />} />
               <Route path='/gifts' element={<Gifts />} />
               <Route path='/addGift' element={<AddGift />} />
+              <Route path='/editGift/:gid' element={<EditGift />} />
               <Route path='/orders' element={<Orders />} />
               <Route path='/checkout' element={<Orders />} />
               <Route path='/accountSetting' element={<AccountSettings />} />
