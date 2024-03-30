@@ -40,6 +40,10 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String oid;
 
+    private String customizedImage;
+
+    private String customizedName;
+
     private Double price;
 
     private Double quantity;

@@ -72,6 +72,8 @@ public class SecurityConfig {
                                                 .hasAuthority(USER_UPDATE.name())
                                                 .requestMatchers(DELETE, Api.USER + "/**")
                                                 .hasAuthority(USER_DELETE.name())
+
+
                                                 .anyRequest().authenticated())
                                 .sessionManagement(session -> session
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))

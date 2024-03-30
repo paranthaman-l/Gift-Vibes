@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.paranthaman.server.constant.Api;
+import com.paranthaman.server.dto.request.UpdateProfile;
 import com.paranthaman.server.models.Admin;
 import com.paranthaman.server.models.Customer;
 import com.paranthaman.server.models.Gift;
@@ -38,9 +39,15 @@ public class AdminController {
     public Admin getUserById(@RequestParam String uid) {
         return adminService.getUserById(uid);
     }
+    
     @GetMapping("/getCustomer")
     public List<Customer> getCustomer() {
         return adminService.getAllCustomer();
+    }
+    
+    @PutMapping("/updateProfile")
+    public String updateProfile(@RequestBody UpdateProfile updateProfile) {
+        return adminService.updateProfile(updateProfile.getUid(),updateProfile.getProfile());
     }
     
     //Theme

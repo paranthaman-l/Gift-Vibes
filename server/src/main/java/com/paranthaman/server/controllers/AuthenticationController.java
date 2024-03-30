@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import com.paranthaman.server.constant.Api;
@@ -17,7 +18,6 @@ import com.paranthaman.server.dto.request.SignUpDTO;
 import com.paranthaman.server.dto.request.SignUpWithGoogle;
 import com.paranthaman.server.dto.response.AuthenticationResponse;
 import com.paranthaman.server.models.Gift;
-import com.paranthaman.server.models.User;
 import com.paranthaman.server.services.AuthService;
 import com.paranthaman.server.services.UserService;
 
@@ -41,7 +41,7 @@ public class AuthenticationController {
             
         }
         return isRegistered ? ResponseEntity.ok(response)
-                : ResponseEntity.badRequest().body("Something went wrong!");
+                : ResponseEntity.badRequest().body("Already Registered Email!");
     }
 
     @PostMapping("/login")
@@ -60,7 +60,7 @@ public class AuthenticationController {
 
         }
         return isRegistered ? ResponseEntity.ok(response)
-                : ResponseEntity.badRequest().body("Something went wrong!");
+                : ResponseEntity.badRequest().body("Already Registered Email!");
     }
 
     @PostMapping("/loginWithGoogle")
@@ -76,6 +76,12 @@ public class AuthenticationController {
     @GetMapping("/getFeaturedGift")
     public List<Gift> geGifts(){
         return userService.getFeaturedGift();
+    }
+
+    
+    @GetMapping("/getProduct")
+    public Gift getProduct(@RequestParam String pid){
+        return userService.getProduct(pid);
     }
 
 }

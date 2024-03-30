@@ -17,8 +17,8 @@ const Product = ({
 }) => {
   const navigate = useNavigate();
   return (
-    <div onClick={() => navigate("/product/" + gid)} className='h-[477px] snap-center w-[300px] duration-200 relative bg-white shadow mx-5 group flex flex-col text-darkGreen'>
-      <div className="p-8">
+    <div className='h-[477px] snap-center w-[300px] duration-200 relative bg-white shadow mx-5 group flex flex-col text-darkGreen'>
+      <div className="p-8"  >
         <div className="flex justify-between items-center">
           <p className='text-gray-400  uppercase'>Gift</p>
           {discount != 0 &&
@@ -58,12 +58,12 @@ const Product = ({
           </div>
         </div>
         <div className="mt-4">
-          <img className='h-60 w-60' src={giftImage ? giftImage : logo} alt="" />
+          <img onClick={() => navigate("/product/" + gid)} className='h-60 w-60 cursor-pointer' src={giftImage ? giftImage : logo} alt="" />
         </div>
         <div className="flex flex-col justify-between">
           <div className="mt-4">
             <p>{rating}</p>
-            <p className='line-clamp-2 hover:text-red duration-200 cursor-pointer'>{giftName}</p>
+            <p onClick={() => navigate("/product/" + gid)} className='line-clamp-2 hover:text-red duration-200 cursor-pointer'>{giftName}</p>
           </div>
           <div className="flex items-center ">
             <p className='text-2xl font-semibold mt-3 mr-2'>₹{price - (price * discount / 100)}</p>

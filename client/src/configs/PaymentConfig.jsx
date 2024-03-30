@@ -12,11 +12,6 @@ const razorpayConfig = {
     name: 'GIFT VIBES',
 }
 
-const testuserconfig = {
-    name: 'PARANTHAMAN L',
-    email: 'paranthamanl2004@gmail.com',
-    contact: 9626474259
-}
 
 
-export { ContactConfig, razorpayConfig, testuserconfig }
+export { ContactConfig, razorpayConfig }

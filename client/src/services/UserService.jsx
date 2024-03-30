@@ -23,6 +23,9 @@ class UserService {
     getProduct(pid) {
         return userApi.get("/getProduct", { params: { pid }, headers })
     }
+    updateProfile(uid, profile) {
+        return userApi.put("/updateProfile", { uid, profile }, { headers });
+}
 }
 
 export default new UserService()

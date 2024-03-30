@@ -59,7 +59,7 @@ public class AuthService {
 			return false;
 		}
 	}
-	// @SuppressWarnings("null")
+
 	public boolean userRegistrationWithGoogle(SignUpWithGoogle request) {
 		Optional<User> isUserExists = userRepository.findByEmail(request.getEmail());
 		if (!isUserExists.isPresent()) {

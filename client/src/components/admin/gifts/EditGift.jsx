@@ -3,7 +3,8 @@ import logo from '../../../../public/logo.svg'
 import { useEffect, useState } from 'react'
 import AdminService from '../../../services/AdminService';
 import { useNavigate, useParams } from 'react-router-dom';
-
+import toast from 'react-hot-toast';
+import ImageCompressor from "image-compressor.js";
 const EditGift = () => {
     const [gift, setGift] = useState();
     const navigate = useNavigate();
@@ -27,6 +28,83 @@ const EditGift = () => {
             console.log(err);
         })
     }
+    const [image, setImage] = useState();
+    const handleImageChange = async (e) => {
+      e.preventDefault();
+      const selectedImage = e.target.files[0];
+      if (selectedImage) {
+        const compressedImage = await compressImage(selectedImage);
+        const imageData = new FormData();
+        imageData.append("file", compressedImage);
+        imageData.append("upload_preset", "giftvibes");
+        try {
+          const response = await fetch(
+            `https://api.cloudinary.com/v1_1/dczv2ejcu/image/upload`,
+            {
+              method: "POST",
+              body: imageData,
+            }
+          );
+  
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+  
+          const data = await response.json();
+          setImage(data.secure_url)
+          setGift({ ...gift, image: data.secure_url })
+          toast.custom((t) => (
+            <div
+              className={`bg-green text-white px-6 py-5 shadow-xl rounded-xl transition-all  ${t.visible
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-4"
+                } duration-300 ease-in-out`}>
+              <div className="flex items-center gap-2 text-white">
+                <span>
+                  <i className="fa-solid fa-circle-check"></i>
+                </span>
+                <div>
+                  <span className="">Image Upload successfully !</span>
+                </div>
+              </div>
+            </div>
+          ));
+        } catch (error) {
+          // console.error("Error uploading image to Cloudinary:", error);
+          toast.custom((t) => (
+            <div
+              className={`bg-[#ff5e5b] text-white px-6 py-5 shadow-xl rounded-xl transition-all  ${t.visible
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-4"
+                } duration-300 ease-in-out`}>
+              <div className="flex items-center gap-2 text-white">
+                <span>
+                  <i className="fa-solid text-xl fa-circle-xmark"></i>
+                </span>
+                <div>
+                  <span className="">
+                    Error Upload Image
+                  </span>
+                </div>
+              </div>
+            </div>
+          ));
+        }
+      }
+    };
+    const compressImage = async (image) => {
+      return new Promise((resolve, reject) => {
+        new ImageCompressor(image, {
+          quality: 0.1,
+          success(result) {
+            resolve(result);
+          },
+          error(error) {
+            reject(error);
+          },
+        });
+      });
+    };
     return (
         <div className='px-10 w-3/4 h-[650px] overflow-y-scroll'>
             <p className='text-4xl font-semibold tracking-wider text-textGray'>Edit Gift</p>
@@ -55,11 +133,11 @@ const EditGift = () => {
                         </div>
                         <div className="flex items-center my-5">
                             <div className="shrink-0 mx-3">
-                                <img className="h-28 w-28 object-cover rounded-full p-5" src={logo} alt="Current profile photo" />
+                                <img className="h-28 w-28 object-cover rounded-full p-5" src={image ? image : logo} alt="Current profile photo" />
                             </div>
                             <label className="block">
                                 <span className="sr-only ">Choose Gift photo</span>
-                                <input onChange={handleChange} name='image' type="file" className="cursor-pointer block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-lightGreen file:text-darkGreen hover:file:bg-opacity-60" />
+                                <input onChange={handleImageChange} name='image' type="file" className="cursor-pointer block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-lightGreen file:text-darkGreen hover:file:bg-opacity-60" />
                             </label>
                         </div>
                         <div className="flex my-3 items-center justify-between">

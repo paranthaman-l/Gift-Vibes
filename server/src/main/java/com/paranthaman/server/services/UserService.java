@@ -74,6 +74,28 @@ public class UserService {
 
     public Gift getProduct(String pid) {
         return giftRepository.findById(pid).get();
+    }
+
+    public String updateProfile(String uid, String profile) {
+        try{
+            Customer customer = customerRepository.findById(uid).get();
+            customer.setProfile(profile);
+            customerRepository.save(customer);
+        }catch(Exception e){
+            return "Profile Not Updated!";
+        }
+        return "Profile Updated";
+    }
+
+    public String addWishList(String uid, String gid) {
+        try{
+            Customer customer = customerRepository.findById(uid).get();
+            customer.getWishList().add(gid);
+            customerRepository.save(customer);
+        }catch(Exception e){
+            return "Wish List Not Updated";
+        }
+        return "Wish List Updated";
     } 
 
 }

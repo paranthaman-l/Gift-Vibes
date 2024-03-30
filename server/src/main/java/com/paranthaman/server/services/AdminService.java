@@ -43,7 +43,7 @@ public class AdminService {
         } catch (Exception e) {
             return "Theme not added!";
         }
-        return "Theme added";
+        return "Theme added "+theme.getTid();
     }
 
     public String updateTheme(String tid, Theme theme) {
@@ -80,7 +80,7 @@ public class AdminService {
         } catch (Exception e) {
             return "Gift not added!";
         }
-        return "Gift added";
+        return "Gift added "+gift.getGid();
     }
 
     public String updateGift(String gid, Gift gift) {
@@ -114,6 +114,17 @@ public class AdminService {
 
     public Admin getUserById(String uid) {
         return adminRepository.findById(uid).get();
+    }
+
+    public String updateProfile(String uid, String profile) {
+        try{
+            Admin admin = adminRepository.findById(uid).get();
+            admin.setProfile(profile);
+            adminRepository.save(admin);
+        }catch(Exception e){
+            return "Profile Not Updated!";
+        }
+        return "Profile Updated";
     }
 
 

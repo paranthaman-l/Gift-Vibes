@@ -34,7 +34,7 @@ const Gifts = () => {
         {gifts?.map((gift) => {
           return (
             <div key={gift?.gid} className="shadow-md min-h-48 flex p-4 my-5 group">
-              <img className='h-40 w-40 ' src={logo} alt="" />
+              <img className='h-40 w-40 ' src={gift?.image ? gift?.image : logo} alt="" />
               <div className="px-10 flex flex-col">
                 <div className="">
                   <p className='text line-clamp-1 my-2 text-lg'>{gift.name}</p>

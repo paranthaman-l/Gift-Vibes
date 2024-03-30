@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.paranthaman.server.constant.Api;
+import com.paranthaman.server.dto.request.UpdateProfile;
 import com.paranthaman.server.models.Admin;
 import com.paranthaman.server.models.Customer;
 import com.paranthaman.server.models.Gift;
@@ -49,8 +50,11 @@ public class UserController {
     public Gift getProduct(@RequestParam String pid){
         return userService.getProduct(pid);
     }
-
-        
+      
+    @PutMapping("/updateProfile")
+       public String updateProfile(@RequestBody UpdateProfile updateProfile) {
+        return userService.updateProfile(updateProfile.getUid(),updateProfile.getProfile());
+    }
 
     // Orders
 
@@ -75,4 +79,10 @@ public class UserController {
         return userService.makePayment(payment);
     }
     
+
+    @PostMapping("addWishList")
+    public String addWishList(@RequestParam String uid, @RequestBody String gid) {
+        
+        return userService.addWishList(uid, gid);
+    }
 }

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import ProductDetails from '../../components/user/product/ProductDetails'
 import { useNavigate, useParams } from 'react-router-dom'
-import UserService from '../../services/UserService'
+import AuthService from '../../services/AuthService'
 
 const Product = () => {
     const {pid} = useParams();
     const navigate = useNavigate();
     const [product,setProduct] = useState();
     useEffect(() => {
-        UserService.getProduct(pid).then((response) => {
+        AuthService.getProduct(pid).then((response) => {
             setProduct(response.data);
         }).catch((error) => {
             console.log(error);

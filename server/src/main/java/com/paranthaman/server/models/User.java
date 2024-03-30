@@ -53,6 +53,9 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String authType;
 
+    @Column(nullable = true)
+    private String contact;
+
     @Column(nullable = false)
     private Boolean isEnabled;
 

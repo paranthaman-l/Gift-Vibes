@@ -1,14 +1,6 @@
 import { useEffect } from "react";
 import { adminApi } from "../apis/axios"
 
-const Use = () => {
-    useEffectt(() => {
-
-    }, []);
-    return (
-        ""
-    )
-}
 
 const token = localStorage.getItem("token");
 const uid = localStorage.getItem("uid");
@@ -18,6 +10,7 @@ const headers = {
     'Content-Type': 'application/json',
 }
 class AdminService {
+    
     GetUser() {
         return adminApi.get("/getById", {
             params: { uid: localStorage.getItem('uid') }, 
@@ -49,6 +42,10 @@ class AdminService {
 
     deleteGift(gid) {
         return adminApi.delete("/gift/" + gid, { headers });
+    }
+
+    updateProfile(uid, profile) {
+        return adminApi.put("/updateProfile",{uid,profile},{headers});
     }
 }
 

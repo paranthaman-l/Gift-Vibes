@@ -22,6 +22,9 @@ class AuthService {
     getFeaturedGift() {
         return authApi.get("/getFeaturedGift")
     }
+    getProduct(pid) {
+        return authApi.get("/getProduct", { params: { pid } })
+    }
 }
 
 export default new AuthService()

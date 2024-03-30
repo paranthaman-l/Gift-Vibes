@@ -34,6 +34,8 @@ public class Payment {
     private Double amountPaid;
 
     private Date paymentDate;
+
+    private String payment_id;
     
     private String modeOfPayment;
 
