@@ -14,6 +14,7 @@ const ProfileLayOut = lazy(() => import('./layouts/Profile'))
 const Login = lazy(() => import('./pages/auth/Login'))
 const SignUp = lazy(() => import('./pages/auth/SignUp'))
 const UserHome = lazy(() => import('./pages/user/Home'))
+const Shop = lazy(() => import('./pages/user/Shop'))
 const AdminDashBoard = lazy(() => import('./pages/admin/DashBoard'))
 const Addresses = lazy(() => import('./pages/user/Addresses'))
 const DashBoard = lazy(() => import('./pages/user/DashBoard'))
@@ -45,16 +46,17 @@ function App() {
         <Suspense fallback={<Loader />}>
           <ScrollToTop />
           <Routes>
-            <Route path='/customized' element={<Customized />} />
             <Route element={<CommonLayout />}>
               <Route path='/login' element={<Login />} />
               <Route path='/signUp' element={<SignUp />} />
             </Route>
             <Route element={<UserLayout />}>
               <Route path='/' element={<UserHome />} />
+              <Route path='/customized' element={<Customized />} />
               <Route path='/customizedTShirt' element={<CustomizedTShirt />} />
               <Route path='/product/:pid' element={<Product />} />
               <Route path='/checkOut' element={<CheckOut />} />
+              <Route path='/shop' element={<Shop />} />
             </Route>
             <Route element={<AdminLayout />}>
               <Route path='/admin' element={<AdminDashBoard />} />

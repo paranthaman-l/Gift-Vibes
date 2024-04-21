@@ -1,48 +1,62 @@
-import { FaRegUser,FaTruckFast } from "react-icons/fa6";
-import { GiCardboardBoxClosed } from "react-icons/gi";
+import Chart from "../../components/admin/dashboard/Chart";
 
 const DashBoard = () => {
     return (
-        <div className='px-10 w-3/4 h-[650px] flex flex-col overflow-y-scroll'>
+        <div className='px-10 w-3/4 h-[650px]  overflow-y-scroll'>
             <p className='text-4xl font-semibold tracking-wider text-textGray'>DashBoard</p>
-            <div className="grid w-full grid-flow-row gap-5 grid-cols-3 my-10">
-                <div className="shadow-lg group h-48 p-4 cursor-pointer flex flex-col items-center">
-                    <div className="">
-                        <p className="p-2 flex items-center rounded-full bg-green bg-opacity-50">
-                            <FaRegUser className="text-5xl p-2 group-hover:text-gray-800 text-darkGreen" />
-                            <p className="mx-10 text-2xl font-semibold text-darkGreen">User</p>
-                        </p>
+            <main>
+                <div className="analyse">
+                    <div className="sales">
+                        <div className="status">
+                            <div className="info">
+                                <h3>Total Sales</h3>
+                                <h1>$65,024</h1>
+                            </div>
+                            <div className="progresss">
+                                <svg>
+                                    <circle cx="38" cy="38" r="36"></circle>
+                                </svg>
+                                <div className="percentage">
+                                    <p>+81%</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div className="flex items-center justify-center h-full">
-                        <p className="text-darkGreen text-3xl">1</p>
+                    <div className="visits">
+                        <div className="status">
+                            <div className="info">
+                                <h3>Total Users</h3>
+                                <h1>24,981</h1>
+                            </div>
+                            <div className="progresss">
+                                <svg>
+                                    <circle cx="38" cy="38" r="36"></circle>
+                                </svg>
+                                <div className="percentage">
+                                    <p>-48%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="searches">
+                        <div className="status">
+                            <div className="info">
+                                <h3>Orders</h3>
+                                <h1>14,147</h1>
+                            </div>
+                            <div className="progresss">
+                                <svg>
+                                    <circle cx="38" cy="38" r="36"></circle>
+                                </svg>
+                                <div className="percentage">
+                                    <p>+21%</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                <div className="shadow-lg group h-48 p-4 cursor-pointer flex flex-col items-center">
-                    <div className="">
-                        <p className="p-2 flex items-center rounded-full bg-green bg-opacity-50">
-                            <GiCardboardBoxClosed className="text-5xl group-hover:text-gray-800 text-darkGreen" />
-                            <p className="mx-10 text-2xl font-semibold text-darkGreen">Product</p>
-                        </p>
-                    </div>
-                    <div className="flex items-center justify-center h-full">
-                        <p className="text-darkGreen text-3xl">15</p>
-                    </div>
-                </div>
-
-                <div className="shadow-lg group h-48 p-4 cursor-pointer flex flex-col items-center">
-                    <div className="">
-                        <p className="p-2 flex items-center rounded-full bg-green bg-opacity-50">
-                            <FaTruckFast className="text-5xl group-hover:text-gray-800 p-1 text-darkGreen" />
-                            <p className="mx-10 text-2xl font-semibold text-darkGreen">Orders</p>
-                        </p>
-                    </div>
-                    <div className="flex items-center justify-center h-full">
-                        <p className="text-darkGreen text-3xl">40</p>
-                    </div>
-                </div>
-
-            </div>
+            </main>
+            <Chart />
         </div>
     )
 }

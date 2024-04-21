@@ -1,10 +1,7 @@
-import React from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import logo from '../../assets/logo.svg'
 import { CiHeart, CiSearch, CiUser } from "react-icons/ci";
-import { BsPerson } from "react-icons/bs";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
-import profile from "../../assets/products/product2.webp"
 import { Menu, MenuHandler, MenuItem, MenuList } from "@material-tailwind/react";
 import { useStates } from '../../States';
 import { PiSignOutBold } from 'react-icons/pi';
@@ -20,17 +17,17 @@ const Navbar = () => {
       path: "/shop",
     },
     {
-      title: "Personalized Gift",
+      title: "Personalized Website",
       path: "/customized",
     },
     {
-      title: "Sales off",
-      path: "/salesOff",
+      title: "Customized T-shirt",
+      path: "/customizedTshirt",
     },
-    {
-      title: "contact",
-      path: "/contact",
-    },
+    // {
+    //   title: "contact",
+    //   path: "/contact",
+    // },
   ]
   const { user, setUser } = useStates();
   return (
@@ -51,7 +48,7 @@ const Navbar = () => {
             <CiSearch className='hover:text-red duration-200 cursor-pointer' />
           </div>
           <div className="">
-            <CiHeart className='hover:text-red duration-200 cursor-pointer' />
+            <CiHeart onClick={()=>navigate("/wishlist")} className='hover:text-red duration-200 cursor-pointer' />
           </div>
           <div className="">
             <HiOutlineShoppingBag className='hover:text-red text-2xl duration-200 cursor-pointer' />
@@ -73,7 +70,9 @@ const Navbar = () => {
                 <MenuItem className="flex items-center hover:bg-white border-t-[1px] border-gray border-opacity-50 mt-2">
                   <div className="flex flex-col py-1 justify-start w-full text-darkGray">
                     <MenuItem onClick={() => navigate("/dashboard")} className="flex justify-start items-center py-2 rounded-xl text-lg cursor-pointer my-[2px] w-full hover:bg-lightSkyBlue2">
-                      <img className="w-8 h-8 rounded-full mx-2" src={"https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1361&q=80"} alt="" /> Profile
+                      <img className="w-8 h-8 rounded-full mx-2"
+                        src={`${user?.profile ? user?.profile : "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8"}`}
+                        alt="" /> Profile
                     </MenuItem>
                     <MenuItem className="flex  justify-start items-center py-2 rounded-xl text-lg cursor-pointer my-[2px] w-full">
                       <img className="mx-2 w-6 h-6 text-white" src="https://app.connecteam.com/images/base-line/header/notification-bell-new.svg" alt="" />
@@ -90,7 +89,7 @@ const Navbar = () => {
                 </MenuItem>
               </MenuList>
             </Menu> : <div>
-              <CiUser onClick={()=>navigate("/login")} className='cursor-pointer' />
+              <CiUser onClick={() => navigate("/login")} className='cursor-pointer' />
             </div>}
 
         </div>

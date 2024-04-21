@@ -7,6 +7,7 @@ import { CiHeart } from "react-icons/ci";
 import { PiSignOutBold } from "react-icons/pi";
 import { NavLink } from "react-router-dom";
 import { useStates } from "../../States";
+import { HiOutlineShoppingBag } from "react-icons/hi2";
 const SideBar = () => {
   const datas = [
     {
@@ -19,10 +20,15 @@ const SideBar = () => {
       icon: <BiBasket />,
       path: "/myOrders"
     },
+    // {
+    //   title: "Downloads",
+    //   icon: <BsFileEarmarkZip />,
+    //   path: "/downloads"
+    // },
     {
-      title: "Downloads",
-      icon: <BsFileEarmarkZip />,
-      path: "/downloads"
+      title: "Cart",
+      icon: <HiOutlineShoppingBag />,
+      path: "/cart"
     },
     {
       title: "Addresses",
