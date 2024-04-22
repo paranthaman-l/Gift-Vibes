@@ -21,7 +21,8 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping(Api.MAIL)
-@CrossOrigin(value = Api.FRONTEND)
+@CrossOrigin("*")
+
 @RequiredArgsConstructor
 public class MailController {
     private final MailService mailService;

@@ -4,6 +4,7 @@ import Navbar from '../components/user/Navbar';
 import SideBar from '../components/user/SideBar';
 import Footer from '../components/user/Footer';
 import { useStates } from '../States';
+import { Toaster } from 'react-hot-toast';
 
 const User = () => {
     const { GetUserDetails } = useStates();
@@ -14,6 +15,7 @@ const User = () => {
         <>
             <div className='m-0 p-0 flex flex-row min-h-screen w-full'>
                 {/* <SideBar /> */}
+                <Toaster position='top-right' />
                 <div className='w-full'>
                     <Navbar />
                     <div className='w-full flex flex-col p-0 gap-4'>

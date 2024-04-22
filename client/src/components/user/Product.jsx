@@ -1,7 +1,7 @@
 import React from 'react'
 import product from '../../assets/products/product3.webp'
 import { GoScreenFull } from "react-icons/go";
-import { Tooltip } from '@material-tailwind/react';
+import { Rating, Tooltip } from '@material-tailwind/react';
 import { CiHeart } from "react-icons/ci";
 import { IoIosGitCompare } from "react-icons/io";
 import { TbBasket } from "react-icons/tb";
@@ -61,8 +61,8 @@ const Product = ({
           <img onClick={() => navigate("/product/" + gid)} className='h-60 w-60 cursor-pointer' src={giftImage ? giftImage : logo} alt="" />
         </div>
         <div className="flex flex-col justify-between">
-          <div className="mt-4">
-            <p>{rating}</p>
+          <div className="mt-4 ">
+            <p className='flex items-center'> <Rating className='' value={Math.floor(Math.random() * 5) + 1} readonly/>{rating}</p>
             <p onClick={() => navigate("/product/" + gid)} className='line-clamp-2 hover:text-red duration-200 cursor-pointer'>{giftName}</p>
           </div>
           <div className="flex items-center ">

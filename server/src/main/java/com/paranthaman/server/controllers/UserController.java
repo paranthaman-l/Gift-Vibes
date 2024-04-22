@@ -26,15 +26,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 @RestController
 @RequestMapping(Api.USER)
 @RequiredArgsConstructor
-@CrossOrigin(value = Api.FRONTEND)
+@CrossOrigin("*")
 public class UserController {
-    
-    private final UserService userService;
 
+    private final UserService userService;
 
     @GetMapping("/getById")
     public Customer getUserById(@RequestParam String uid) {
@@ -42,29 +40,29 @@ public class UserController {
     }
 
     @GetMapping("/getFeaturedGift")
-    public List<Gift> geGifts(){
+    public List<Gift> geGifts() {
         return userService.getFeaturedGift();
     }
 
     @GetMapping("/getProduct")
-    public Gift getProduct(@RequestParam String pid){
+    public Gift getProduct(@RequestParam String pid) {
         return userService.getProduct(pid);
     }
-      
+
     @PutMapping("/updateProfile")
-       public String updateProfile(@RequestBody UpdateProfile updateProfile) {
-        return userService.updateProfile(updateProfile.getUid(),updateProfile.getProfile());
+    public String updateProfile(@RequestBody UpdateProfile updateProfile) {
+        return userService.updateProfile(updateProfile.getUid(), updateProfile.getProfile());
     }
 
     // Orders
 
     @PostMapping("/order")
-    public String addOrder(@RequestBody Order order,@RequestParam String uid,@RequestParam List<String> gids) {
-        return userService.addOrder(order,uid,gids);
+    public String addOrder(@RequestBody Order order, @RequestParam String uid, @RequestParam List<String> gids) {
+        return userService.addOrder(order, uid, gids);
     }
 
     @PutMapping("/order/{oid}")
-    public String putOrder(@PathVariable String oid,@RequestBody Order order) {
+    public String putOrder(@PathVariable String oid, @RequestBody Order order) {
         return userService.putOrder(order);
     }
 
@@ -72,17 +70,16 @@ public class UserController {
     public String deleteOrder(@PathVariable String oid) {
         return userService.deleteOrder(oid);
     }
-    
+
     // Payment
     @PostMapping("/payment")
     public boolean makePayment(@RequestBody Payment payment) {
         return userService.makePayment(payment);
     }
-    
 
     @PostMapping("addWishList")
     public String addWishList(@RequestParam String uid, @RequestBody String gid) {
-        
+
         return userService.addWishList(uid, gid);
     }
 }

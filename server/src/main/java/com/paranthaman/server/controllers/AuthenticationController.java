@@ -24,7 +24,8 @@ import com.paranthaman.server.services.UserService;
 @RestController
 @RequestMapping(Api.AUTH)
 @RequiredArgsConstructor
-@CrossOrigin(value = Api.FRONTEND)
+@CrossOrigin("*")
+
 public class AuthenticationController {
 
     private final AuthService authService;

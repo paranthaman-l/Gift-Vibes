@@ -10,6 +10,7 @@ import AuthService from '../../services/AuthService'
 import { useStates } from '../../States';
 import AdminService from '../../services/AdminService';
 import UserService from '../../services/UserService';
+import toast from 'react-hot-toast';
 const Login = () => {
     const navigate = useNavigate();
     const { login, setLogin, GetUserDetails, setUser } = useStates();
@@ -21,6 +22,27 @@ const Login = () => {
     };
     const Login = async (e) => {
         e.preventDefault();
+        if (login.email.trim() == "" || login.password.trim() == "") {
+            toast.custom((t) => (
+                <div
+                    className={`bg-[#ff5e5b] font-grotesk text-white px-6 py-5 shadow-xl rounded-xl transition-all  ${t.visible
+                        ? "opacity-100 translate-y-0"
+                        : "opacity-0 translate-y-4"
+                        } duration-300 ease-in-out`}>
+                    <div className="flex items-center gap-2 text-white">
+                        <span>
+                            <i className="fa-solid text-xl fa-circle-xmark"></i>
+                        </span>
+                        <div>
+                            <span className="tracking-widest">
+                                Enter All field!
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            ));
+            return;
+        }
         await AuthService.Login(login).then(async (res) => {
             localStorage.setItem("token", res.data.token);
             localStorage.setItem("role", res.data.role);
@@ -29,7 +51,26 @@ const Login = () => {
             if (res.data.role == 'ADMIN') {
                 await AdminService.GetUser().then((response) => {
                     setUser(response.data);
-                    navigate("/admin")
+                    toast.custom((t) => (
+                        <div
+                            className={`bg-green font-grotesk text-white px-6 py-5 shadow-xl rounded-xl transition-all  ${t.visible
+                                ? "opacity-100 translate-y-0"
+                                : "opacity-0 translate-y-4"
+                                } duration-300 ease-in-out`}>
+                            <div className="flex items-center gap-2 text-white">
+                                <span>
+                                    <i className="fa-solid fa-circle-check"></i>
+                                </span>
+                                <div>
+                                    <span className="">Logged In successfully !</span>
+                                </div>
+                            </div>
+                        </div>
+                    ));
+                    setTimeout(() => {
+                        navigate("/admin");
+                        toast.remove();
+                    }, 1000)
                 }).catch((error) => {
                     console.log(error);
                 })
@@ -37,16 +78,70 @@ const Login = () => {
             else if (res.data.role == 'USER') {
                 await UserService.GetUser().then((response) => {
                     setUser(response.data);
-                    navigate("/");
+                    toast.custom((t) => (
+                        <div
+                            className={`bg-green font-grotesk text-white px-6 py-5 shadow-xl rounded-xl transition-all  ${t.visible
+                                ? "opacity-100 translate-y-0"
+                                : "opacity-0 translate-y-4"
+                                } duration-300 ease-in-out`}>
+                            <div className="flex items-center gap-2 text-white">
+                                <span>
+                                    <i className="fa-solid fa-circle-check"></i>
+                                </span>
+                                <div>
+                                    <span className="">Logged In successfully !</span>
+                                </div>
+                            </div>
+                        </div>
+                    ));
+                    setTimeout(() => {
+                        navigate("/");
+                        toast.remove();
+                    }, 1000)
+
                 }).catch((error) => {
                     console.log(error);
                 })
             } else {
-                alert("Invalid Credentials")
+                toast.custom((t) => (
+                    <div
+                        className={`bg-[#ff5e5b] font-grotesk text-white px-6 py-5 shadow-xl rounded-xl transition-all  ${t.visible
+                            ? "opacity-100 translate-y-0"
+                            : "opacity-0 translate-y-4"
+                            } duration-300 ease-in-out`}>
+                        <div className="flex items-center gap-2 text-white">
+                            <span>
+                                <i className="fa-solid text-xl fa-circle-xmark"></i>
+                            </span>
+                            <div>
+                                <span className="">
+                                    Invalid Credential!
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                ));
             }
         }).catch((err) => {
-            alert("Invalid Credentials")
-            console.log(err);
+            toast.custom((t) => (
+                <div
+                    className={`bg-[#ff5e5b] font-grotesk text-white px-6 py-5 shadow-xl rounded-xl transition-all  ${t.visible
+                        ? "opacity-100 translate-y-0"
+                        : "opacity-0 translate-y-4"
+                        } duration-300 ease-in-out`}>
+                    <div className="flex items-center gap-2 text-white">
+                        <span>
+                            <i className="fa-solid text-xl fa-circle-xmark"></i>
+                        </span>
+                        <div>
+                            <span className="">
+                                Invalid Credential!
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            ));
+            // console.log(err);
         })
     }
     const handleLogin = async (e) => {
@@ -58,24 +153,79 @@ const Login = () => {
                 localStorage.setItem("role", res.data.role);
                 localStorage.setItem("uid", res.data.uid);
                 GetUserDetails();
-            if (res.data.role == 'ADMIN') {
-                await AdminService.GetUser().then((response) => {
-                    setUser(response.data);
-                    navigate("/admin")
-                }).catch((error) => {
-                    console.log(error);
-                })
-            }
-            else if (res.data.role == 'USER') {
-                await UserService.GetUser().then((response) => {
-                    setUser(response.data);
-                    navigate("/");
-                }).catch((error) => {
-                    console.log(error);
-                })
-            } else {
-                alert("Invalid Credentials")
-            }
+                if (res.data.role == 'ADMIN') {
+                    await AdminService.GetUser().then((response) => {
+                        setUser(response.data);
+                        toast.custom((t) => (
+                            <div
+                                className={`bg-green font-grotesk text-white px-6 py-5 shadow-xl rounded-xl transition-all  ${t.visible
+                                    ? "opacity-100 translate-y-0"
+                                    : "opacity-0 translate-y-4"
+                                    } duration-300 ease-in-out`}>
+                                <div className="flex items-center gap-2 text-white">
+                                    <span>
+                                        <i className="fa-solid fa-circle-check"></i>
+                                    </span>
+                                    <div>
+                                        <span className="">Logged In successfully !</span>
+                                    </div>
+                                </div>
+                            </div>
+                        ));
+                        setTimeout(() => {
+                            navigate("/admin");
+                            toast.remove();
+                        }, 1000)
+                    }).catch((error) => {
+                        console.log(error);
+                    })
+                }
+                else if (res.data.role == 'USER') {
+                    await UserService.GetUser().then((response) => {
+                        setUser(response.data);
+                        toast.custom((t) => (
+                            <div
+                                className={`bg-green font-grotesk text-white px-6 py-5 shadow-xl rounded-xl transition-all  ${t.visible
+                                    ? "opacity-100 translate-y-0"
+                                    : "opacity-0 translate-y-4"
+                                    } duration-300 ease-in-out`}>
+                                <div className="flex items-center gap-2 text-white">
+                                    <span>
+                                        <i className="fa-solid fa-circle-check"></i>
+                                    </span>
+                                    <div>
+                                        <span className="">Logged In successfully !</span>
+                                    </div>
+                                </div>
+                            </div>
+                        ));
+                        setTimeout(() => {
+                            navigate("/");
+                            toast.remove();
+                        }, 1000)
+                    }).catch((error) => {
+                        console.log(error);
+                    })
+                } else {
+                    toast.custom((t) => (
+                        <div
+                            className={`bg-[#ff5e5b] font-grotesk text-white px-6 py-5 shadow-xl rounded-xl transition-all  ${t.visible
+                                ? "opacity-100 translate-y-0"
+                                : "opacity-0 translate-y-4"
+                                } duration-300 ease-in-out`}>
+                            <div className="flex items-center gap-2 text-white">
+                                <span>
+                                    <i className="fa-solid text-xl fa-circle-xmark"></i>
+                                </span>
+                                <div>
+                                    <span className="">
+                                        Invalid Credential!
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    ));
+                }
             }).catch((err) => {
                 console.log(err);
             })

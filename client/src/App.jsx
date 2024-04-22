@@ -6,7 +6,6 @@ import Loader from './components/shared/Loader'
 import Customized from './pages/Customized'
 import { States, useStates } from './States'
 import ScrollToTop from './utils/ScrollToTop'
-import CheckOut from './pages/user/CheckOut'
 const CommonLayout = lazy(() => import('./layouts/Common'))
 const AdminLayout = lazy(() => import('./layouts/Admin'))
 const UserLayout = lazy(() => import('./layouts/User'))
@@ -16,8 +15,12 @@ const SignUp = lazy(() => import('./pages/auth/SignUp'))
 const UserHome = lazy(() => import('./pages/user/Home'))
 const Shop = lazy(() => import('./pages/user/Shop'))
 const AdminDashBoard = lazy(() => import('./pages/admin/DashBoard'))
+const Team = lazy(() => import('./pages/admin/Team'))
+const Report = lazy(() => import('./pages/admin/Report'))
 const Addresses = lazy(() => import('./pages/user/Addresses'))
 const DashBoard = lazy(() => import('./pages/user/DashBoard'))
+const CheckOut = lazy(() => import('./pages/user/CheckOut'))
+const Cart = lazy(() => import('./pages/user/Cart'))
 const BillingAddress = lazy(() => import('./pages/user/BillingAddress'))
 const ShippingAddress = lazy(() => import('./pages/user/ShippingAddress'))
 const AccountDetails = lazy(() => import('./pages/user/AccountDetails'))
@@ -66,7 +69,8 @@ function App() {
               <Route path='/addGift' element={<AddGift />} />
               <Route path='/editGift/:gid' element={<EditGift />} />
               <Route path='/orders' element={<Orders />} />
-              <Route path='/checkout' element={<Orders />} />
+              <Route path='/team' element={<Team />} />
+              <Route path='/reports' element={<Report />} />
               <Route path='/accountSetting' element={<AccountSettings />} />
             </Route>
             <Route element={<ProfileLayOut />}>
@@ -79,6 +83,7 @@ function App() {
               <Route path='/downloads' element={<Downloads />} />
               <Route path='/compare' element={<Compare />} />
               <Route path='/wishlist' element={<WishList />} />
+              <Route path='/cart' element={<Cart />} />
             </Route>
           </Routes>
         </Suspense>

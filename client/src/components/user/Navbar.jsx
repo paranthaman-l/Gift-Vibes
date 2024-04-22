@@ -43,15 +43,17 @@ const Navbar = () => {
         <div className="flex ">
           <NavLink to={"/"}><img className='h-10 object-contain mx-5 ' src={logo} alt="" /></NavLink>
         </div>
-        <div className="w-3/6 text-3xl flex justify-evenly items-center mr-10">
-          <div className="">
-            <CiSearch className='hover:text-red duration-200 cursor-pointer' />
-          </div>
-          <div className="">
-            <CiHeart onClick={()=>navigate("/wishlist")} className='hover:text-red duration-200 cursor-pointer' />
-          </div>
-          <div className="">
-            <HiOutlineShoppingBag className='hover:text-red text-2xl duration-200 cursor-pointer' />
+        <div className=" text-3xl flex justify-evenly items-center mr-10">
+          <div className="flex justify-between items-center w-full">
+            <div className="">
+              <CiSearch onClick={()=>navigate("/shop")} className='hover:text-red duration-200 cursor-pointer mx-2' />
+            </div>
+            <div className="">
+              <CiHeart onClick={() => navigate("/wishlist")} className='hover:text-red duration-200 cursor-pointer mx-2' />
+            </div>
+            <div className="">
+              <HiOutlineShoppingBag onClick={()=>navigate("/cart")} className='hover:text-red text-2xl duration-200 cursor-pointer mx-2' />
+            </div>
           </div>
           {localStorage.getItem('uid') ?
             <Menu animate={{
@@ -59,11 +61,11 @@ const Navbar = () => {
               unmount: { y: 25 },
             }}>
               <MenuHandler>
-                <div className="flex items-center justify-between cursor-pointer">
+                <div className="flex items-center justify-between cursor-pointer ml-5">
                   <img className='h-10 w-10 rounded-full border '
                     src={`${user?.profile ? user?.profile : "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8"}`}
                     alt="" />
-                  <p className='line-clamp-1 text-2xl max-w-6/12 mx-2'> {user?.user?.name}</p>
+                  <p className='line-clamp-1 text-2xl mx-2 w-44'> {user?.user?.name}</p>
                 </div>
               </MenuHandler>
               <MenuList className="flex absolute w-[250px] p-2 right-0 top-14 flex-col justify-center bg-white shadow-xl rounded-xl">

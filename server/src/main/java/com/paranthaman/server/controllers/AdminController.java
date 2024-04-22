@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RestController
 @RequestMapping(Api.ADMIN)
 @RequiredArgsConstructor
-@CrossOrigin(value = Api.FRONTEND)
+@CrossOrigin("*")
 public class AdminController {
     
     private final AdminService adminService;

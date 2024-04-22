@@ -95,13 +95,13 @@ const AccountDetails = () => {
                 <form className='font-grotesk w-full max-xl:w-full'>
                     <div className="flex items-center mt-5">
                         <div className="shrink-0 mx-3">
-                            <img className="h-16 w-16 object-cover rounded-full" 
-                            src={`${profile? profile : user?.profile ? user?.profile : "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1361&q=80"}`}
-                            alt="Current profile photo" />
+                            <img className="h-16 w-16 object-cover rounded-full"
+                                src={`${profile ? profile : user?.profile ? user?.profile : "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1361&q=80"}`}
+                                alt="Current profile photo" />
                         </div>
                         <label className="block">
                             <span className="sr-only ">Choose profile photo</span>
-                            <input type="file" onChange={handleProfileChange} className="cursor-pointer block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-lightGreen file:text-darkGreen hover:file:bg-opacity-60"/>
+                            <input type="file" onChange={handleProfileChange} className="cursor-pointer block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-lightGreen file:text-darkGreen hover:file:bg-opacity-60" />
                         </label>
                     </div>
                     <div className="text-darkGreen">
@@ -123,7 +123,7 @@ const AccountDetails = () => {
                         </div>
                         <div className="flex my-6 flex-col">
                             <label className='my-1' htmlFor="email">Email <span className='text-red'>*</span></label>
-                            <input id='email' type="email"  value={user?.user?.email}  className='outline-none border border-darkGreen p-3 py-4 text-sm border-opacity-30 focus:border-opacity-100 duration-200 rounded-sm' placeholder='Enter your Email address...' />
+                            <input id='email' type="email" value={user?.user?.email} className='outline-none border border-darkGreen p-3 py-4 text-sm border-opacity-30 focus:border-opacity-100 duration-200 rounded-sm' placeholder='Enter your Email address...' />
                         </div>
                         <div className="border relative border-darkGreen mt-14 border-opacity-30 my-6 p-5">
                             <p className='absolute -top-3 bg-white px-2 '>Password change</p>

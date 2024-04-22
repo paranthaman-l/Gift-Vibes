@@ -1,23 +1,22 @@
-import React, { useEffect } from 'react'
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import signInWithGoogle from '../../assets/btn_google_signin.png'
-import Button from '../../components/shared/Button';
-import logo from '../../assets/logo.svg'
-import product1 from '../../assets/products/product5.webp'
-import product3 from '../../assets/products/product6.webp'
-import product4 from '../../assets/products/product0.jpg'
-import { FaRegCircleDot } from 'react-icons/fa6'
+import { useEffect, useState } from 'react';
+import { FaRegCircleDot } from 'react-icons/fa6';
 import { IoCheckmarkCircle } from "react-icons/io5";
-import { doSignInWithGoogle } from '../../apis/auth';
-import AuthService from '../../services/AuthService';
+import { Link, useNavigate } from "react-router-dom";
 import { useStates } from '../../States';
+import { doSignInWithGoogle } from '../../apis/auth';
+import logo from '../../assets/logo.svg';
+import product4 from '../../assets/products/product0.jpg';
+import product1 from '../../assets/products/product5.webp';
+import product3 from '../../assets/products/product6.webp';
+import Button from '../../components/shared/Button';
 import AdminService from '../../services/AdminService';
+import AuthService from '../../services/AuthService';
 import UserService from '../../services/UserService';
+import toast from 'react-hot-toast';
 
 const SignUp = () => {
     const navigate = useNavigate();
-    const { signUp, setSignUp, user, setUser, GetUserDetails } = useStates();
+    const { signUp, setSignUp, setUser, GetUserDetails } = useStates();
     const [passwordStrength, setPasswordStrength] = useState({})
     const [signUpError, setSignUpError] = useState({});
     const [otp, setOtp] = useState(new Array(6).fill(""));
@@ -61,20 +60,53 @@ const SignUp = () => {
 
     const SignUp = async (e) => {
         e.preventDefault();
-        console.log("clicked");
         const error = Validate();
         if (!error.username && !error.email && !error.password && !error.confirmPassword && !error.signUpType) {
             await AuthService.SendOTP(signUp).then(async (response) => {
                 if (response.data.error == null) {
                     setActualOtp(response.data.data)
                 } else {
-                    alert(response.data.error)
+                    toast.custom((t) => (
+                        <div
+                            className={`bg-[#ff5e5b] font-grotesk text-white px-6 py-5 shadow-xl rounded-xl transition-all  ${t.visible
+                                ? "opacity-100 translate-y-0"
+                                : "opacity-0 translate-y-4"
+                                } duration-300 ease-in-out`}>
+                            <div className="flex items-center gap-2 text-white">
+                                <span>
+                                    <i className="fa-solid text-xl fa-circle-xmark"></i>
+                                </span>
+                                <div>
+                                    <span className="">
+                                        {response.data.error}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    ));
                 }
             }).catch((err) => {
                 console.log(err);
             })
         } else {
-            alert("Enter all the fields")
+            toast.custom((t) => (
+                <div
+                    className={`bg-[#ff5e5b] font-grotesk text-white px-6 py-5 shadow-xl rounded-xl transition-all  ${t.visible
+                        ? "opacity-100 translate-y-0"
+                        : "opacity-0 translate-y-4"
+                        } duration-300 ease-in-out`}>
+                    <div className="flex items-center gap-2 text-white">
+                        <span>
+                            <i className="fa-solid text-xl fa-circle-xmark"></i>
+                        </span>
+                        <div>
+                            <span className="tracking-widest">
+                                Enter All field!
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            ));
         }
     }
 
@@ -93,6 +125,7 @@ const SignUp = () => {
     }
     const VerifyOTP = async (e) => {
         e.preventDefault();
+        console.log(actualOtp);
         const enteredOTP = otp.join('');
         console.log(enteredOTP, actualOtp);
         if (enteredOTP.length < 6) {
@@ -101,7 +134,7 @@ const SignUp = () => {
         }
         if (enteredOTP == actualOtp) {
             await AuthService.SignUp(signUp).then(async (response) => {
-                await AuthService.Login({ email: signUp.email, password: signUp.password }).then(async(res) => {
+                await AuthService.Login({ email: signUp.email, password: signUp.password }).then(async (res) => {
                     localStorage.setItem("token", res.data.token);
                     localStorage.setItem("role", res.data.role);
                     localStorage.setItem("uid", res.data.uid);
@@ -109,7 +142,26 @@ const SignUp = () => {
                     if (res.data.role == 'ADMIN') {
                         await AdminService.GetUser().then((response) => {
                             setUser(response.data);
-                            navigate("/admin")
+                            toast.custom((t) => (
+                                <div
+                                    className={`bg-green font-grotesk text-white px-6 py-5 shadow-xl rounded-xl transition-all  ${t.visible
+                                        ? "opacity-100 translate-y-0"
+                                        : "opacity-0 translate-y-4"
+                                        } duration-300 ease-in-out`}>
+                                    <div className="flex items-center gap-2 text-white">
+                                        <span>
+                                            <i className="fa-solid fa-circle-check"></i>
+                                        </span>
+                                        <div>
+                                            <span className="">Logged In successfully !</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            ));
+                            setTimeout(() => {
+                                navigate("/admin");
+                                toast.remove();
+                            }, 1000)
                         }).catch((error) => {
                             console.log(error);
                         })
@@ -117,12 +169,49 @@ const SignUp = () => {
                     else if (res.data.role == 'USER') {
                         await UserService.GetUser().then((response) => {
                             setUser(response.data);
-                            navigate("/");
+                            setUser(response.data);
+                            toast.custom((t) => (
+                                <div
+                                    className={`bg-green font-grotesk text-white px-6 py-5 shadow-xl rounded-xl transition-all  ${t.visible
+                                        ? "opacity-100 translate-y-0"
+                                        : "opacity-0 translate-y-4"
+                                        } duration-300 ease-in-out`}>
+                                    <div className="flex items-center gap-2 text-white">
+                                        <span>
+                                            <i className="fa-solid fa-circle-check"></i>
+                                        </span>
+                                        <div>
+                                            <span className="">Logged In successfully !</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            ));
+                            setTimeout(() => {
+                                navigate("/");
+                                toast.remove();
+                            }, 1000)
                         }).catch((error) => {
                             console.log(error);
                         })
                     } else {
-                        alert("Invalid Credentials")
+                        toast.custom((t) => (
+                            <div
+                                className={`bg-[#ff5e5b] font-grotesk text-white px-6 py-5 shadow-xl rounded-xl transition-all  ${t.visible
+                                    ? "opacity-100 translate-y-0"
+                                    : "opacity-0 translate-y-4"
+                                    } duration-300 ease-in-out`}>
+                                <div className="flex items-center gap-2 text-white">
+                                    <span>
+                                        <i className="fa-solid text-xl fa-circle-xmark"></i>
+                                    </span>
+                                    <div>
+                                        <span className="">
+                                            Some thing Went Wrong!
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        ));
                     }
                 })
             }).catch((err) => {
@@ -142,24 +231,63 @@ const SignUp = () => {
                 localStorage.setItem("role", res.data.role);
                 localStorage.setItem("uid", res.data.uid);
                 GetUserDetails();
-            if (res.data.role == 'ADMIN') {
-                await AdminService.GetUser().then((response) => {
-                    setUser(response.data);
-                    navigate("/admin")
-                }).catch((error) => {
-                    console.log(error);
-                })
-            }
-            else if (res.data.role == 'USER') {
-                await UserService.GetUser().then((response) => {
-                    setUser(response.data);
-                    navigate("/");
-                }).catch((error) => {
-                    console.log(error);
-                })
-            } else {
-                alert("Invalid Credentials")
-            }
+                if (res.data.role == 'ADMIN') {
+                    await AdminService.GetUser().then((response) => {
+                        setUser(response.data);
+                        toast.custom((t) => (
+                            <div
+                                className={`bg-green font-grotesk text-white px-6 py-5 shadow-xl rounded-xl transition-all  ${t.visible
+                                    ? "opacity-100 translate-y-0"
+                                    : "opacity-0 translate-y-4"
+                                    } duration-300 ease-in-out`}>
+                                <div className="flex items-center gap-2 text-white">
+                                    <span>
+                                        <i className="fa-solid fa-circle-check"></i>
+                                    </span>
+                                    <div>
+                                        <span className="">Logged In successfully !</span>
+                                    </div>
+                                </div>
+                            </div>
+                        ));
+                        setTimeout(() => {
+                            navigate("/admin");
+                            toast.remove();
+                        }, 1000)
+                    }).catch((error) => {
+                        console.log(error);
+                    })
+                }
+                else if (res.data.role == 'USER') {
+                    await UserService.GetUser().then((response) => {
+                        setUser(response.data);
+                        setUser(response.data);
+                        toast.custom((t) => (
+                            <div
+                                className={`bg-green font-grotesk text-white px-6 py-5 shadow-xl rounded-xl transition-all  ${t.visible
+                                    ? "opacity-100 translate-y-0"
+                                    : "opacity-0 translate-y-4"
+                                    } duration-300 ease-in-out`}>
+                                <div className="flex items-center gap-2 text-white">
+                                    <span>
+                                        <i className="fa-solid fa-circle-check"></i>
+                                    </span>
+                                    <div>
+                                        <span className="">Logged In successfully !</span>
+                                    </div>
+                                </div>
+                            </div>
+                        ));
+                        setTimeout(() => {
+                            navigate("/");
+                            toast.remove();
+                        }, 1000)
+                    }).catch((error) => {
+                        console.log(error);
+                    })
+                } else {
+                    alert("Invalid Credentials")
+                }
             }).catch((err) => {
                 console.log(err);
             })

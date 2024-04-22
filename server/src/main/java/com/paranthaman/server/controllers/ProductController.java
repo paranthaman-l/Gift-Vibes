@@ -22,7 +22,8 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping(Api.PRODUCT)
 @RequiredArgsConstructor
-@CrossOrigin(value = Api.FRONTEND)
+@CrossOrigin("*")
+
 public class ProductController {
 
     private final ProductService productService;
